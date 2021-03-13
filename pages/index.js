@@ -1,9 +1,8 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <meta charset='utf-8' />
         <meta http-equiv='X-UA-Compatible' content='IE=edge' />
@@ -31,9 +30,9 @@ export default function Home() {
         <meta name="theme-color" content="#ff0000" />        
       </Head>
 
-      <main className={styles.main}>
-        <div className={styles.grid}>
-          placeholder
+      <main>
+        <div className="text-2xl font-medium text-black">
+          placeholder 2
         </div>
       </main>
     </div>
