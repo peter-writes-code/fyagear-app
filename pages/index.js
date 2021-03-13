@@ -11,7 +11,7 @@ export default function Home() {
         <meta name='description' content='Gear to die for' />
         <meta name='keywords' content='Outdoor,Survival,Gear,Woods,Bushcraft,Mountain,Wilderness' />
         <title>Fyagear</title>
-        <link rel="manifest" href="/manifest.json" />
+        {/* <link rel="manifest" href="/manifest.json" /> */}
 
         <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
@@ -27,48 +27,13 @@ export default function Home() {
         <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
         <meta name="msapplication-TileColor" content="#ff0000" />
-        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+        <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ff0000" />        
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          placeholder
         </div>
       </main>
     </div>
