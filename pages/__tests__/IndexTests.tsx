@@ -5,7 +5,7 @@ import Home from "../index";
 
 test("Check for Getting Started Text", () => {
   const { getByText } = render(<Home />);
-  expect(getByText("Gear stream goes here.")).toBeInTheDocument();
+  expect(getByText("Gear stream goes here...")).toBeInTheDocument();
 });
 
 it("renders correctly", () => {
@@ -16,7 +16,7 @@ it("renders correctly", () => {
         <div
           className="p-8text-2xl font-medium text-black"
         >
-          Gear stream goes here.
+          Gear stream goes here...
         </div>
       </main>
     </div>

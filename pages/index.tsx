@@ -8,7 +8,7 @@ const Home = () => {
       <AppHead title={title} />
 
       <main>
-        <div className="p-8text-2xl font-medium text-black">Gear stream goes here.</div>
+        <div className="p-8text-2xl font-medium text-black">Gear stream goes here...</div>
       </main>
     </div>
   );
