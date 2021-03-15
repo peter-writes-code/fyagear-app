@@ -1,7 +1,3 @@
-import 'tailwindcss/tailwind.css'
+import wrappedApp from './_app.tsx'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
-
-export default MyApp
+export default wrappedApp
