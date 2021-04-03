@@ -1,5 +1,3 @@
-import configureStore from "redux-mock-store";
-import { Provider } from "react-redux";
 import { render, screen } from "@testing-library/react";
 import renderer from "react-test-renderer";
 import "@testing-library/jest-dom/extend-expect";
@@ -7,28 +5,12 @@ import "@testing-library/jest-dom/extend-expect";
 import Index from "../../pages/index";
 
 test("Check for Getting Started Text", () => {
-  const initialState = {};
-  const mockStore = configureStore();
-  const store = mockStore(initialState);
-  const { getByText } = render(
-    <Provider store={store}>
-      <Index />
-    </Provider>
-  );
+  const { getByText } = render(<Index />);
   expect(getByText("SUBMIT GEAR!")).toBeInTheDocument();
 });
 
 it("renders correctly", () => {
-  const initialState = {};
-  const mockStore = configureStore();
-  const store = mockStore(initialState);
-  const tree = renderer
-    .create(
-      <Provider store={store}>
-        <Index />
-      </Provider>
-    )
-    .toJSON();
+  const tree = renderer.create(<Index />).toJSON();
   expect(tree).toMatchInlineSnapshot(`
     <div
       className="flex flex-col h-screen bg-gradient-to-br from-gray-200 to-white select-none"
