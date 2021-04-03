@@ -6,7 +6,7 @@ import Index from "../../pages/index";
 
 test("Check for Getting Started Text", () => {
   const { getByText } = render(<Index />);
-  expect(getByText("SUBMIT GEAR!")).toBeInTheDocument();
+  expect(getByText("welcome to fyagear!")).toBeInTheDocument();
 });
 
 it("renders correctly", () => {
@@ -30,10 +30,8 @@ it("renders correctly", () => {
         </div>
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
         >
-          SUBMIT GEAR!
+          LOGIN WITH GOOGLE
         </button>
       </main>
     </div>
