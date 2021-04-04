@@ -13,11 +13,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
 
     // the user is authenticated!
-    const { uid, email } = token;
+    const { uid } = token;
     // FETCH STUFF HERE!! 🚀
 
     return {
-      props: { uid, email },
+      props: { uid },
     };
   } catch (err) {
     return { props: {} as never };
@@ -30,7 +30,7 @@ const Index = (
   const title = "fyagear | home";
   const { user, loading, signinWithGoogle, signout } = useAuth();
   const serverSideAuthenticated = props.uid ? true : false;
-  const clientSideAuthenticated = !loading && user.uid ? true : false;
+  const clientSideAuthenticated = !loading && user && user.uid ? true : false;
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-br from-gray-200 to-white select-none">
@@ -69,9 +69,6 @@ const Index = (
             LOGIN WITH GOOGLE
           </button>
         )}
-        <div className="mt-6">serverSideAuthenticated: {serverSideAuthenticated.toString()}</div>
-        <div>clientSideAuthenticated: {clientSideAuthenticated.toString()}</div>
-        <div>loading: {loading.toString()}</div>
       </main>
     </div>
   );

@@ -3,14 +3,16 @@ import renderer from "react-test-renderer";
 import "@testing-library/jest-dom/extend-expect";
 
 import Index from "../../pages/index";
+import dotenv from "dotenv";
+dotenv.config({ path: ".." });
 
 test("Check for Getting Started Text", () => {
-  const { getByText } = render(<Index />);
+  const { getByText } = render(<Index uid="mocked" />);
   expect(getByText("welcome to fyagear!")).toBeInTheDocument();
 });
 
 it("renders correctly", () => {
-  const tree = renderer.create(<Index />).toJSON();
+  const tree = renderer.create(<Index uid="mocked" />).toJSON();
   expect(tree).toMatchInlineSnapshot(`
     <div
       className="flex flex-col h-screen bg-gradient-to-br from-gray-200 to-white select-none"
@@ -30,8 +32,15 @@ it("renders correctly", () => {
         </div>
         <button
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
         >
-          LOGIN WITH GOOGLE
+          SUBMIT GEAR!
+        </button>
+        <button
+          className="ml-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        >
+          LOGOUT
         </button>
       </main>
     </div>

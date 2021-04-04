@@ -12,7 +12,9 @@ const clientCredentials = {
 
 if (typeof window !== "undefined" && !firebase.apps.length) {
   firebase.initializeApp(clientCredentials);
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+  if (process.env.NODE_ENV !== 'test') {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+  }
 }
 
 export default firebase;
