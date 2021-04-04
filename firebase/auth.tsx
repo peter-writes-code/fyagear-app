@@ -1,18 +1,20 @@
-//Ref https://docs.react2025.com/firebase/use-auth
+import firebaseClient from "./firebaseClient";
+import nookies from "nookies";
 import React, { useState, useEffect, useContext, createContext } from "react";
 import Router from "next/router";
-import firebase from "./firebase";
 // import { createUser } from './db';
 
-const authContext = createContext({});
+const AuthContext = createContext<{ user: firebaseClient.User | null }>({
+  user: null,
+});
 
 export function AuthProvider({ children }) {
   const auth = useFirebaseAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = (): any => {
-  return useContext(authContext);
+  return useContext(AuthContext);
 };
 
 function useFirebaseAuth() {
@@ -27,40 +29,53 @@ function useFirebaseAuth() {
 
       // createUser(user.uid, userWithoutToken);
       setUser(user);
-
       setLoading(false);
+      nookies.set(undefined, "token", token, { path: "/" });
+      if (Router.asPath === "/") {
+        Router.push("/");
+      }
+
       return user;
     } else {
       setUser(false);
       setLoading(false);
+      nookies.set(undefined, "token", "", { path: "/" });
       return false;
     }
   };
 
   const signinWithGoogle = (redirect) => {
     setLoading(true);
-    return firebase
+    return firebaseClient
       .auth()
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((response) => {
-        handleUser(response.user);
-
-        if (redirect) {
-          Router.push(redirect);
-        }
+      .signInWithRedirect(new firebaseClient.auth.GoogleAuthProvider())
+      .then(() => {
+        Router.push("/");
       });
   };
 
   const signout = () => {
-    return firebase
+    return firebaseClient
       .auth()
       .signOut()
-      .then(() => handleUser(false));
+      .then(() => {
+        handleUser(false);
+        Router.push("/");
+      });
   };
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onIdTokenChanged(handleUser);
+    const unsubscribe = firebaseClient.auth().onIdTokenChanged(handleUser);
     return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const handle = setInterval(async () => {
+      const user = firebaseClient.auth().currentUser;
+      if (user) await user.getIdToken(true);
+    }, 10 * 60 * 1000);
+
+    return () => clearInterval(handle);
   }, []);
 
   // useEffect(() => {
@@ -77,8 +92,8 @@ function useFirebaseAuth() {
   // }, [user]); // needs to depend on user to have closure on a valid user object in callback fun
 
   const getFreshToken = async () => {
-    console.log("getFreshToken called", new Date());
-    const currentUser = firebase.auth().currentUser;
+    // console.log("getFreshToken called", new Date());
+    const currentUser = firebaseClient.auth().currentUser;
     if (currentUser) {
       const token = await currentUser.getIdToken(false);
       return `${token}`;
@@ -106,7 +121,7 @@ const formatUser = async (user) => {
   // const token = await user.getIdToken(/* forceRefresh */ true);
   const decodedToken = await user.getIdTokenResult(/*forceRefresh*/ true);
   const { token, expirationTime } = decodedToken;
-  console.log(token);
+  // console.log(token);
   return {
     uid: user.uid,
     email: user.email,
