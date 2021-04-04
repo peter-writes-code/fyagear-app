@@ -6,7 +6,7 @@
 .pnp.js
 
 #firebase
-fyagear-app-firebase-adminsdk.json
+# fyagear-app-firebase-adminsdk.json
 
 # testing
 /coverage
