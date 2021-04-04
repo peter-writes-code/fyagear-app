@@ -1,4 +1,27 @@
+import nookies from "nookies";
+import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
+
 import AppHead from "../components/common/AppHead";
+import { firebaseAdmin } from "../firebase/firebaseAdmin";
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const cookies = nookies.get(ctx);
+    const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+
+    // the user is authenticated!
+    const { uid, email } = token;
+    // FETCH STUFF HERE!! 🚀
+
+    return {
+      props: { message: `Your email is ${email} and your UID is ${uid}.` },
+    };
+  } catch (err) {
+    ctx.res.writeHead(302, { Location: "/" });
+    ctx.res.end();
+    return { props: {} as never };
+  }
+};
 
 const SubmitGear = () => {
   const title = "fyagear | submit gear!";
