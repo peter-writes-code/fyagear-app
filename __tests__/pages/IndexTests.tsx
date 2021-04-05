@@ -40,7 +40,7 @@ it("renders correctly", () => {
               className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 border
           border-gray-500 rounded-md shadow-md transition-all duration-200 ease-in-out
           transform hover:scale-110
-          translate-x-0 opacity-100 pointer-events-auto"
+          translate-x-6 opacity-0 pointer-events-none"
             >
               SUBMIT GEAR!
             </button>
@@ -52,7 +52,7 @@ it("renders correctly", () => {
               className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 border
           border-gray-500 rounded-md shadow-md transition-all duration-200 ease-in-out
           transform hover:scale-110
-          translate-x-0 opacity-100 pointer-events-auto"
+          translate-x-6 opacity-0 pointer-events-none"
             >
               LOGOUT
             </button>

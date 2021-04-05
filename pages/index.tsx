@@ -30,7 +30,13 @@ const Index = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   const title = "fyagear | home";
-  const { user, loading, signinWithGoogle, signout } = useAuth();
+  const {
+    user,
+    loading,
+    signinWithGoogle,
+    signupWithGoogle,
+    signout,
+  } = useAuth();
   const serverSideAuthenticated = props.uid ? true : false;
   const clientSideAuthenticated = !loading && user && user.uid ? true : false;
 
@@ -44,11 +50,20 @@ const Index = (
           soon the stream of gear will go here. until then please go ahead and
         </div>
         {!serverSideAuthenticated && (
-          <Button
-            label="LOGIN WITH GOOGLE"
-            onClick={signinWithGoogle}
-            visible={!serverSideAuthenticated && !loading}
-          />
+          <span>
+            <Button
+              label="LOGIN"
+              onClick={signinWithGoogle}
+              visible={!loading && !clientSideAuthenticated}
+            />
+            <div className="mt-4">
+              <Button
+                label="SIGNUP WITH GOOGLE"
+                onClick={signupWithGoogle}
+                visible={!loading && !clientSideAuthenticated}
+              />
+            </div>
+          </span>
         )}
         {serverSideAuthenticated && (
           <span>
@@ -56,7 +71,7 @@ const Index = (
               <a>
                 <Button
                   label="SUBMIT GEAR!"
-                  visible={serverSideAuthenticated && !loading}
+                  visible={!loading && clientSideAuthenticated}
                 />
               </a>
             </Link>
@@ -64,7 +79,7 @@ const Index = (
               <Button
                 label="LOGOUT"
                 onClick={signout}
-                visible={serverSideAuthenticated && !loading}
+                visible={!loading && clientSideAuthenticated}
               />
             </span>
           </span>

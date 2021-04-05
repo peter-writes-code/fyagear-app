@@ -8,13 +8,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
     const cookies = nookies.get(ctx);
     const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
-
-    // the user is authenticated!
-    const { uid, email } = token;
-    // FETCH STUFF HERE!! 🚀
-
     return {
-      props: { message: `Your email is ${email} and your UID is ${uid}.` },
+      props: {},
     };
   } catch (err) {
     ctx.res.writeHead(302, { Location: "/" });
