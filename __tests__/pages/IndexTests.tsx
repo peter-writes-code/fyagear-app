@@ -30,18 +30,34 @@ it("renders correctly", () => {
         >
           soon the stream of gear will go here. until then please go ahead and
         </div>
-        <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
-        >
-          SUBMIT GEAR!
-        </button>
-        <button
-          className="ml-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-        >
-          LOGOUT
-        </button>
+        <span>
+          <a
+            href="/submitGear"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            <button
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 border
+          border-gray-500 rounded-md shadow-md transition-all duration-200 ease-in-out
+          transform hover:scale-110
+          translate-x-0 opacity-100 pointer-events-auto"
+            >
+              SUBMIT GEAR!
+            </button>
+          </a>
+          <span
+            className="ml-4"
+          >
+            <button
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 border
+          border-gray-500 rounded-md shadow-md transition-all duration-200 ease-in-out
+          transform hover:scale-110
+          translate-x-0 opacity-100 pointer-events-auto"
+            >
+              LOGOUT
+            </button>
+          </span>
+        </span>
       </main>
       <div>
         <div
