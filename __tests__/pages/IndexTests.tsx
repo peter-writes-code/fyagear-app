@@ -43,6 +43,41 @@ it("renders correctly", () => {
           LOGOUT
         </button>
       </main>
+      <div>
+        <div
+          className="fixed top-0 right-0 bottom-0 left-0 bg-black transition duration-300 ease-in-out
+          bg-opacity-0 pointer-events-none"
+        />
+        <div
+          className="fixed top-0 right-0 bottom-0 left-0 transition duration-300 ease-in-out
+                flex justify-center items-center
+                opacity-0 pointer-events-none"
+        >
+          <svg
+            className="w-11 h-11 animate-spin"
+            viewBox="0 0 50 50"
+          >
+            <circle
+              className="stroke-current text-red-600 opacity-30"
+              cx="25"
+              cy="25"
+              fill="none"
+              r="20"
+              strokeWidth="10"
+            />
+            <circle
+              className="stroke-current text-red-600"
+              cx="25"
+              cy="25"
+              fill="none"
+              r="20"
+              strokeDasharray="90, 150"
+              strokeDashoffset="-35"
+              strokeWidth="10"
+            />
+          </svg>
+        </div>
+      </div>
     </div>
   `);
 });
