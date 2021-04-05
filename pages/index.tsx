@@ -47,7 +47,7 @@ const Index = (
           <Button
             label="LOGIN WITH GOOGLE"
             onClick={signinWithGoogle}
-            visible={!loading}
+            visible={!serverSideAuthenticated && !loading}
           />
         )}
         {serverSideAuthenticated && (
@@ -56,7 +56,7 @@ const Index = (
               <a>
                 <Button
                   label="SUBMIT GEAR!"
-                  visible={!loading}
+                  visible={serverSideAuthenticated && !loading}
                 />
               </a>
             </Link>
@@ -64,7 +64,7 @@ const Index = (
               <Button
                 label="LOGOUT"
                 onClick={signout}
-                visible={!loading}
+                visible={serverSideAuthenticated && !loading}
               />
             </span>
           </span>
