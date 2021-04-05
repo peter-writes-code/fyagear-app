@@ -5,6 +5,7 @@ import React from "react";
 
 import AppHead from "../components/common/AppHead";
 import { firebaseAdmin } from "../firebase/firebaseAdmin";
+import ProgressIndicator from "../components/common/ProgressIndicator";
 import { useAuth } from "../firebase/auth";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -41,19 +42,14 @@ const Index = (
         <div className="text-base py-6">
           soon the stream of gear will go here. until then please go ahead and
         </div>
-        {loading && (
-          <h1>
-            authenticating...
-          </h1>
-        )}
-        {serverSideAuthenticated && (
+        {serverSideAuthenticated && !loading && (
           <Link href="/submitGear">
             <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
               SUBMIT GEAR!
             </button>
           </Link>
         )}
-        {serverSideAuthenticated && (
+        {serverSideAuthenticated && !loading && (
           <button
             className="ml-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
             onClick={signout}
@@ -70,6 +66,7 @@ const Index = (
           </button>
         )}
       </main>
+      <ProgressIndicator visible={loading} />
     </div>
   );
 };
