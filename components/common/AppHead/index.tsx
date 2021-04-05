@@ -15,7 +15,7 @@ const AppHead: React.FC<AppHeadProps> = (props) => {
       <meta name='description' content='Gear to die for' />
       <meta name='keywords' content='Outdoor,Survival,Gear,Woods,Bushcraft,Mountain,Wilderness' />
       <title>{ title }</title>
-      {/* <link rel="manifest" href="/manifest.json" /> */}
+      <link rel="manifest" href="/manifest.json" />
 
       <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png" />
       <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png" />
