@@ -4,6 +4,7 @@ import nookies from "nookies";
 import React from "react";
 
 import AppHead from "../components/common/AppHead";
+import Button from "../components/common/Button";
 import { firebaseAdmin } from "../firebase/firebaseAdmin";
 import ProgressIndicator from "../components/common/ProgressIndicator";
 import { useAuth } from "../firebase/auth";
@@ -42,28 +43,31 @@ const Index = (
         <div className="text-base py-6">
           soon the stream of gear will go here. until then please go ahead and
         </div>
-        {serverSideAuthenticated && !loading && (
-          <Link href="/submitGear">
-            <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              SUBMIT GEAR!
-            </button>
-          </Link>
-        )}
-        {serverSideAuthenticated && !loading && (
-          <button
-            className="ml-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-            onClick={signout}
-          >
-            LOGOUT
-          </button>
-        )}
-        {!serverSideAuthenticated && !loading && (
-          <button
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        {!serverSideAuthenticated && (
+          <Button
+            label="LOGIN WITH GOOGLE"
             onClick={signinWithGoogle}
-          >
-            LOGIN WITH GOOGLE
-          </button>
+            visible={!loading}
+          />
+        )}
+        {serverSideAuthenticated && (
+          <span>
+            <Link href="/submitGear">
+              <a>
+                <Button
+                  label="SUBMIT GEAR!"
+                  visible={!loading}
+                />
+              </a>
+            </Link>
+            <span className="ml-4">
+              <Button
+                label="LOGOUT"
+                onClick={signout}
+                visible={!loading}
+              />
+            </span>
+          </span>
         )}
       </main>
       <ProgressIndicator visible={loading} />
