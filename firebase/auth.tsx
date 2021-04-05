@@ -1,5 +1,5 @@
 import firebaseClient from "./firebaseClient";
-import nookies from "nookies";
+import nookies, { parseCookies } from "nookies";
 import React, { useState, useEffect, useContext, createContext } from "react";
 import Router from "next/router";
 // import { createUser } from './db';
@@ -18,27 +18,38 @@ export const useAuth = (): any => {
 };
 
 function useFirebaseAuth() {
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState(null);
+  const [user, setUser] = useState(null);
 
   const handleUser = async (rawUser) => {
-    console.log("handleUser called", new Date());
     if (rawUser) {
       const user = await formatUser(rawUser);
-      const { token, ...userWithoutToken } = user;
-
-      // createUser(user.uid, userWithoutToken);
+      const { token } = user;
       setUser(user);
-      setLoading(false);
       nookies.set(undefined, "token", token, { path: "/" });
-      if (Router.asPath === "/") {
-        Router.push("/");
-      }
+  
+      const profile = await getUserProfile(user.uid);
+      setLoading(false);
 
+      if (profile) {
+        setUserProfile(profile);
+        if (Router.asPath === "/") {
+          Router.push("/");
+        }
+      } else {
+        const cookies = parseCookies();
+        if (cookies.signupAttempt) {
+          Router.push("/signup");
+        } else {
+          setUser(false);
+          signout();
+        }
+      }
       return user;
     } else {
-      setUser(false);
       setLoading(false);
+      setUser(false);
       nookies.set(undefined, "token", "", { path: "/" });
       return false;
     }
@@ -49,12 +60,25 @@ function useFirebaseAuth() {
     return firebaseClient
       .auth()
       .signInWithRedirect(new firebaseClient.auth.GoogleAuthProvider())
-      .then(() => {
-        Router.push("/");
-      });
+      .then(() => {});
+  };
+
+  const signupWithGoogle = () => {
+    nookies.set(undefined, "signupAttempt", "true", { path: "/" });
+    return signinWithGoogle("signup").then(() => {});
+  };
+
+  const createAccount = async () => {
+    const firestore = firebaseClient.firestore();
+    const userProfile = firestore.collection("userProfiles").doc(user.uid);
+    await userProfile.set(user);
+    nookies.set(undefined, "signupAttempt", "", { path: "/" });
+    Router.push("/");
+    return userProfile;
   };
 
   const signout = () => {
+    nookies.set(undefined, "signupAttempt", "", { path: "/" });
     return firebaseClient
       .auth()
       .signOut()
@@ -103,9 +127,11 @@ function useFirebaseAuth() {
   };
 
   return {
+    createAccount,
     user,
     loading,
     signinWithGoogle,
+    signupWithGoogle,
     signout,
     getFreshToken,
   };
@@ -119,17 +145,24 @@ function useFirebaseAuth() {
 
 const formatUser = async (user) => {
   // const token = await user.getIdToken(/* forceRefresh */ true);
-  const decodedToken = await user.getIdTokenResult(/*forceRefresh*/ true);
+  const decodedToken = await user.getIdTokenResult(false);
   const { token, expirationTime } = decodedToken;
   // console.log(token);
   return {
     uid: user.uid,
     email: user.email,
-    name: user.displayName,
+    displayName: user.displayName,
     provider: user.providerData[0].providerId,
-    photoUrl: user.photoURL,
+    photoURL: user.photoURL,
     token,
     expirationTime,
     // stripeRole: await getStripeRole(),
   };
+};
+
+const getUserProfile = async (uid) => {
+  const firestore = firebaseClient.firestore();
+  const doc = await firestore.collection("userProfiles").doc(uid).get();
+  const userProfile = doc.data();
+  return userProfile;
 };
